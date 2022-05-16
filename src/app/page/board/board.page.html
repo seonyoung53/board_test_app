@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <span>HOME</span><button type="button" class="btn btn-outline-light btn-fw float-right" (click)="logout()">LogOut</button>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main-panel">
+    <div class="content-wrapper pdT0">
+      <div class="template-demo text-right mgB10px">
+        <button type="button" class="btn btn-primary" [routerLink]="['/board-write']">작성하기</button>
+      </div>
+      <!--state가 1인것만 출력-->
+      <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">게시판</h4>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>날짜</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let board of boardList; let i = index;" (click)="goDetailPage(board?.idx)">
+                    <td>{{i + 1}}</td>
+                    <td>{{board?.title}}</td>
+                    <td>{{board?.writer}}</td>
+                    <td>{{board?.writeDate | date: 'yyyy-MM-dd'}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="boardList?.length > 0">
+                  <ion-infinite-scroll-content
+                    loadingSpinner="bubbles"
+                    loadingText="로딩중...">
+                  </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
